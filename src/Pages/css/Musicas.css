@@ -1,0 +1,89 @@
+.musicas {
+  padding: 40px;
+}
+
+.musicas h2 {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #f4c7ff;
+}
+
+/* FLEXBOX */
+.grid-musicas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+/* CARD */
+.card {
+  background: #1f1326;
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  transition: 0.3s;
+
+  flex: 1 1 280px;
+  max-width: 360px;
+  min-width: 260px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* CAPA */
+.card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  object-position: center;
+  background: #09050d;
+  border-radius: 14px;
+  display: block;
+}
+
+/* TITULO */
+.card h3 {
+  margin: 15px 0;
+  color: #fff;
+}
+
+/* BOTÃO */
+.card button {
+  background: #9b2fae;
+  border: none;
+  color: white;
+  font-size: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card button:hover {
+  background: #c04ed6;
+}
+
+@media (max-width: 768px) {
+  .musicas {
+    padding: 24px;
+  }
+
+  .grid-musicas {
+    gap: 18px;
+  }
+
+  .card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .musicas h2 {
+    font-size: 28px;
+  }
+}
