@@ -1,0 +1,303 @@
+.blog-layout {
+  min-height: calc(100vh - 76px);
+  background:
+    radial-gradient(circle at top left, rgba(244, 199, 255, 0.14), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(113, 38, 132, 0.2), transparent 36%),
+    #141018;
+  color: #fff;
+  padding: 46px 40px 70px;
+}
+
+.blog-header {
+  max-width: 1180px;
+  margin: 0 auto 34px;
+  background: rgba(34, 9, 31, 0.62);
+  border: 1px solid rgba(244, 199, 255, 0.16);
+  border-radius: 28px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+}
+
+.blog-label {
+  color: #f4c7ff;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.blog-header h2 {
+  margin: 8px 0 10px;
+  color: #f4c7ff;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.blog-header p {
+  margin: 0;
+  color: #d8cddd;
+  line-height: 1.6;
+  max-width: 680px;
+}
+
+.blog-menu {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.blog-menu a,
+.blog-menu button {
+  border: 1px solid rgba(244, 199, 255, 0.28);
+  background: rgba(244, 199, 255, 0.08);
+  color: #f4c7ff;
+  text-decoration: none;
+  padding: 11px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.blog-menu a.active {
+  background: #f4c7ff;
+  color: #22091f;
+}
+
+.feed-page {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.feed-title {
+  margin-bottom: 24px;
+}
+
+.feed-title span {
+  color: #f4c7ff;
+  font-weight: 800;
+}
+
+.feed-title h3 {
+  margin: 6px 0 0;
+  font-size: 2rem;
+}
+
+.postagens-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.postagem-card {
+  background: rgba(34, 9, 31, 0.78);
+  border: 1px solid rgba(244, 199, 255, 0.18);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+}
+
+.postagem-card span {
+  color: #f4c7ff;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.postagem-card h4 {
+  margin: 12px 0;
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.postagem-card p {
+  color: #d8cddd;
+  line-height: 1.6;
+}
+
+.postagem-card small {
+  color: #b99fc4;
+}
+
+.feed-empty {
+  max-width: 760px;
+  margin: 0 auto;
+  background: rgba(34, 9, 31, 0.78);
+  border: 1px solid rgba(244, 199, 255, 0.18);
+  border-radius: 24px;
+  padding: 34px;
+  text-align: center;
+}
+
+.feed-empty h3 {
+  margin: 0 0 10px;
+  color: #f4c7ff;
+  font-size: 1.8rem;
+}
+
+.feed-empty p {
+  color: #d8cddd;
+  line-height: 1.6;
+}
+
+.feed-empty a {
+  display: inline-block;
+  margin-top: 12px;
+  background: #f4c7ff;
+  color: #22091f;
+  text-decoration: none;
+  font-weight: 900;
+  border-radius: 999px;
+  padding: 13px 22px;
+}
+
+@media (max-width: 900px) {
+  .blog-layout {
+    padding: 32px 20px 56px;
+  }
+
+  .blog-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .blog-menu {
+    justify-content: flex-start;
+  }
+
+  .postagens-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.auth-page {
+  min-height: calc(100vh - 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: rgba(34, 9, 31, 0.88);
+  border: 1px solid rgba(244, 199, 255, 0.22);
+  border-radius: 28px;
+  padding: 36px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.auth-label {
+  width: fit-content;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background: rgba(244, 199, 255, 0.1);
+  border: 1px solid rgba(244, 199, 255, 0.28);
+  color: #f4c7ff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.auth-card h2 {
+  margin: 0;
+  color: #f4c7ff;
+  font-size: 2.2rem;
+  line-height: 1.1;
+}
+
+.auth-card p {
+  margin: 0 0 8px;
+  color: #d8cddd;
+  line-height: 1.6;
+  font-size: 0.98rem;
+}
+
+.auth-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #f4c7ff;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.auth-card input {
+  width: 100%;
+  border: 1px solid rgba(244, 199, 255, 0.22);
+  background: #141018;
+  color: #fff;
+  border-radius: 14px;
+  padding: 14px 15px;
+  outline: none;
+  font-size: 1rem;
+  transition: 0.2s ease;
+}
+
+.auth-card input::placeholder {
+  color: #8f7b96;
+}
+
+.auth-card input:focus {
+  border-color: #f4c7ff;
+  box-shadow: 0 0 0 3px rgba(244, 199, 255, 0.12);
+}
+
+.auth-card button {
+  margin-top: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 22px;
+  background: #f4c7ff;
+  color: #22091f;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.auth-card button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.auth-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-card small {
+  color: #d8cddd;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.auth-card small a {
+  color: #f4c7ff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.auth-card small a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .auth-page {
+    padding: 32px 18px;
+  }
+
+  .auth-card {
+    padding: 28px 22px;
+    border-radius: 22px;
+  }
+
+  .auth-card h2 {
+    font-size: 1.85rem;
+  }
+}
