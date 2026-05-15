@@ -20,6 +20,7 @@ function App() {
           <Link to="/blog/feed">Blog Feed</Link>
           <Link to="/blog/login">Blog Login</Link>
           <Link to="/blog/cadastro">Blog Cadastro</Link>
+          <Link to="/blog/perfil">Perfil</Link>
         </div>
       </nav>
 
