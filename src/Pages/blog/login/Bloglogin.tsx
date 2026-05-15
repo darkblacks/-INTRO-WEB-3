@@ -1,10 +1,11 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { useState } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import type UsuarioLogin from '../../../models/UsuarioLogin'
 import { useAuth } from '../../../contexts/AuthContext'
 import '../css/Auth.css'
 
-function Login() {
+function Bloglogin() {
   const { handleLogin, isLoading } = useAuth()
 
   const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>({
@@ -75,4 +76,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Bloglogin
