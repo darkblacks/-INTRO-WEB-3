@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { useAuth } from '../../../contexts/AuthContext'
 import type Tema from '../../../models/Tema'
@@ -24,9 +25,7 @@ function Blogfeed() {
   const [temaEditandoId, setTemaEditandoId] = useState<number | null>(null)
   const [descricaoTemaEditando, setDescricaoTemaEditando] = useState<string>('')
 
-  const [postagemEditandoId, setPostagemEditandoId] = useState<number | null>(
-    null
-  )
+  const [postagemEditandoId, setPostagemEditandoId] = useState<number | null>(null)
 
   const [novaPostagem, setNovaPostagem] = useState({
     titulo: '',
@@ -46,6 +45,7 @@ function Blogfeed() {
       await buscar('/temas', setTemas, header)
     } catch (error) {
       console.error('Erro ao buscar temas:', error)
+      toast.error('Erro ao carregar os temas.')
     }
   }
 
@@ -54,6 +54,7 @@ function Blogfeed() {
       await buscar('/postagens', setPostagens, header)
     } catch (error) {
       console.error('Erro ao buscar postagens:', error)
+      toast.error('Erro ao carregar as postagens.')
     }
   }
 
@@ -63,6 +64,15 @@ function Blogfeed() {
       buscarPostagens()
     }
   }, [usuario.token])
+
+  function mostrarErroApi(error: any, mensagemPadrao: string) {
+    const mensagem =
+      error.response?.data?.message ||
+      error.message ||
+      mensagemPadrao
+
+    toast.error(Array.isArray(mensagem) ? mensagem.join('\n') : mensagem)
+  }
 
   function atualizarPostagemCampo(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -111,6 +121,7 @@ function Blogfeed() {
       header
     )
 
+    toast.success('Tema criado com sucesso!')
     await buscarTemas()
 
     return temaCriado
@@ -132,17 +143,17 @@ function Blogfeed() {
     e.preventDefault()
 
     if (novaPostagem.titulo.trim() === '') {
-      alert('Digite um título para a postagem.')
+      toast.warn('Digite um título para a postagem.')
       return
     }
 
     if (novaPostagem.texto.trim() === '') {
-      alert('Digite o texto da postagem.')
+      toast.warn('Digite o texto da postagem.')
       return
     }
 
     if (!criandoNovoTema && temaSelecionadoId === 0) {
-      alert('Selecione um tema ou crie um novo.')
+      toast.warn('Selecione um tema ou crie um novo.')
       return
     }
 
@@ -150,7 +161,7 @@ function Blogfeed() {
       const temaFinal = await obterTemaFinal()
 
       if (!temaFinal?.id) {
-        alert('Tema inválido.')
+        toast.error('Tema inválido.')
         return
       }
 
@@ -165,16 +176,19 @@ function Blogfeed() {
 
       if (postagemEditandoId) {
         await atualizar(
-  '/postagens',
-  {
-    id: postagemEditandoId,
-    ...postagemParaEnviar,
-  },
-  () => {},
-  header
-)
+          '/postagens',
+          {
+            id: postagemEditandoId,
+            ...postagemParaEnviar,
+          },
+          () => {},
+          header
+        )
+
+        toast.success('Postagem atualizada com sucesso!')
       } else {
         await cadastrar('/postagens', postagemParaEnviar, () => {}, header)
+        toast.success('Postagem publicada com sucesso!')
       }
 
       limparFormularioPostagem()
@@ -184,13 +198,7 @@ function Blogfeed() {
     } catch (error: any) {
       console.error('Erro ao salvar postagem:', error)
       console.error('Resposta da API:', error.response?.data)
-
-      const mensagem =
-        error.response?.data?.message ||
-        error.message ||
-        'Erro ao salvar postagem.'
-
-      alert(Array.isArray(mensagem) ? mensagem.join('\n') : mensagem)
+      mostrarErroApi(error, 'Erro ao salvar postagem.')
     }
   }
 
@@ -203,6 +211,7 @@ function Blogfeed() {
     setTemaSelecionadoId(postagem.tema?.id || 0)
     setCriandoNovoTema(false)
     setNovoTema('')
+    toast.info('Modo de edição ativado.')
 
     window.scrollTo({
       top: 0,
@@ -219,11 +228,12 @@ function Blogfeed() {
 
     try {
       await deletar(`/postagens/${id}`, header)
+      toast.success('Postagem deletada com sucesso!')
       await buscarPostagens()
     } catch (error: any) {
       console.error('Erro ao deletar postagem:', error)
       console.error('Resposta da API:', error.response?.data)
-      alert('Erro ao deletar postagem.')
+      toast.error('Erro ao deletar postagem.')
     }
   }
 
@@ -242,6 +252,7 @@ function Blogfeed() {
   function iniciarEdicaoTema(tema: Tema) {
     setTemaEditandoId(tema.id)
     setDescricaoTemaEditando(tema.descricao)
+    toast.info('Editando tema.')
   }
 
   function cancelarEdicaoTema() {
@@ -253,7 +264,7 @@ function Blogfeed() {
     const descricao = descricaoTemaEditando.trim()
 
     if (descricao.length < 3) {
-      alert('O tema precisa ter pelo menos 3 caracteres.')
+      toast.warn('O tema precisa ter pelo menos 3 caracteres.')
       return
     }
 
@@ -268,19 +279,14 @@ function Blogfeed() {
         header
       )
 
+      toast.success('Tema atualizado com sucesso!')
       cancelarEdicaoTema()
       await buscarTemas()
       await buscarPostagens()
     } catch (error: any) {
       console.error('Erro ao atualizar tema:', error)
       console.error('Resposta da API:', error.response?.data)
-
-      const mensagem =
-        error.response?.data?.message ||
-        error.message ||
-        'Erro ao atualizar tema.'
-
-      alert(Array.isArray(mensagem) ? mensagem.join('\n') : mensagem)
+      mostrarErroApi(error, 'Erro ao atualizar tema.')
     }
   }
 
@@ -290,7 +296,7 @@ function Blogfeed() {
     )
 
     if (temaPossuiPostagens) {
-      alert(
+      toast.warn(
         'Este tema possui postagens vinculadas. Delete ou edite as postagens antes de deletar o tema.'
       )
       return
@@ -313,11 +319,12 @@ function Blogfeed() {
         setTemaFiltro(0)
       }
 
+      toast.success('Tema deletado com sucesso!')
       await buscarTemas()
     } catch (error: any) {
       console.error('Erro ao deletar tema:', error)
       console.error('Resposta da API:', error.response?.data)
-      alert('Erro ao deletar tema.')
+      toast.error('Erro ao deletar tema.')
     }
   }
 
@@ -361,16 +368,16 @@ function Blogfeed() {
 
                 <div>
                   <Link
-  to="/blog/perfil"
-  style={{
-    color: '#fff',
-    textDecoration: 'none',
-  }}
->
-  <strong>{usuario.nome || usuario.usuario}</strong>
-</Link>
+                    to="/blog/perfil"
+                    style={{
+                      color: '#fff',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    <strong>{usuario.nome || usuario.usuario}</strong>
+                  </Link>
 
-<small>{usuario.usuario}</small>
+                  <small>{usuario.usuario}</small>
                 </div>
               </div>
 
