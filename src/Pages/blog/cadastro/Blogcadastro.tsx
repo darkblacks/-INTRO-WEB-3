@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import type Usuario from '../../../models/Usuario'
 import { cadastrarUsuario } from '../../../services/Service'
 import '../css/Auth.css'
@@ -29,11 +30,11 @@ function Blogcadastro() {
     try {
       await cadastrarUsuario('/usuarios/cadastrar', usuario, () => {})
 
-      alert('Usuário cadastrado com sucesso!')
+      toast.success('Usuário cadastrado com sucesso!')
       navigate('/blog/login')
     } catch (error) {
       console.error('Erro ao cadastrar usuário:', error)
-      alert('Erro ao cadastrar usuário.')
+      toast.error('Erro ao cadastrar usuário.')
     }
   }
 
