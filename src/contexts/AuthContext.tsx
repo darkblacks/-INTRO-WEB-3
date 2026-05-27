@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import type UsuarioLogin from "../models/UsuarioLogin";
 import { login } from "../services/Service";
 
@@ -53,10 +54,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         localStorage.setItem("usuario", JSON.stringify(resposta));
       });
 
+      toast.success("Login realizado com sucesso!");
       navigate("/blog/feed");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
-      alert("Usuário ou senha inválidos.");
+      toast.error("Usuário ou senha inválidos.");
     } finally {
       setIsLoading(false);
     }
@@ -65,6 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function handleLogout() {
     setUsuario(usuarioInicial);
     localStorage.removeItem("usuario");
+    toast.info("Você saiu da conta.");
     navigate("/blog/login");
   }
 
